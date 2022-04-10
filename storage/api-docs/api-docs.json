@@ -1,0 +1,237 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Swagger Integration with PHP Laravel",
+        "description": "Integrate Swagger in Laravel application",
+        "contact": {
+            "email": "nadeemshaik1171998@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/forgotpassword": {
+            "post": {
+                "summary": "forgot password",
+                "description": "forgot user password",
+                "operationId": "99e2b5ebccc1ce3536f8c535b06b8911",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "password reset link genereted in mail"
+                    },
+                    "400": {
+                        "description": "can not find a user with this email address"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/resetPassword": {
+            "post": {
+                "summary": "reset password",
+                "description": "reset user password",
+                "operationId": "bd437661db6f11362ce363815da51517",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "new_password",
+                                    "confirm_password"
+                                ],
+                                "properties": {
+                                    "new_password": {
+                                        "type": "password"
+                                    },
+                                    "confirm_password": {
+                                        "type": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Password reset successfull!"
+                    },
+                    "400": {
+                        "description": "can not find a user with this email address"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/register": {
+            "post": {
+                "summary": "register",
+                "description": "register the user for login",
+                "operationId": "2f25885f3b6f61ca11724ec302d2e439",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "role",
+                                    "firstname",
+                                    "lastname",
+                                    "phone_no",
+                                    "email",
+                                    "password",
+                                    "confirm_password"
+                                ],
+                                "properties": {
+                                    "role": {
+                                        "type": "string"
+                                    },
+                                    "firstname": {
+                                        "type": "string"
+                                    },
+                                    "lastname": {
+                                        "type": "string"
+                                    },
+                                    "phone_no": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "password"
+                                    },
+                                    "confirm_password": {
+                                        "type": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User successfully registered"
+                    },
+                    "401": {
+                        "description": "The email has already been taken"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "summary": "login",
+                "description": " login ",
+                "operationId": "0fc9610184083ac6dddab2c63139225a",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successfull"
+                    },
+                    "401": {
+                        "description": "email not found register first"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "summary": "logout",
+                "description": " logout ",
+                "operationId": "67d5147477c548bfbc3f982833bbc7bd",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "token"
+                                ],
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User successfully signed out"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "Bearer": {
+                "type": "http",
+                "description": "Laravel bearer token authentication",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}

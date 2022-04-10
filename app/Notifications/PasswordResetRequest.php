@@ -7,9 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class PasswordResetRequest extends Notification
+class PasswordResetRequest extends Notification implements ShouldQueue
 {
     use Queueable;
+    
     public $email;
     public $token;
     /**

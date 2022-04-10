@@ -14,6 +14,30 @@ class UserController extends Controller
 {
 
     /**
+     * @OA\Post(
+     *   path="/api/register",
+     *   summary="register",
+     *   description="register the user for login",
+     *   @OA\RequestBody(
+     *         @OA\JsonContent(),
+     *         @OA\MediaType(
+     *            mediaType="multipart/form-data",
+     *            @OA\Schema(
+     *               type="object",
+     *               required={"role","firstname","lastname","phone_no","email", "password", "confirm_password"},
+     *               @OA\Property(property="role", type="string"),
+     *               @OA\Property(property="firstname", type="string"),
+     *               @OA\Property(property="lastname", type="string"),
+     *               @OA\Property(property="phone_no", type="string"),
+     *               @OA\Property(property="email", type="string"),
+     *               @OA\Property(property="password", type="password"),
+     *               @OA\Property(property="confirm_password", type="password")
+     *            ),
+     *        ),
+     *    ),
+     *   @OA\Response(response=201, description="User successfully registered"),
+     *   @OA\Response(response=401, description="The email has already been taken"),
+     * )
      * It takes a POST request and requires fields for the user to register,
      * and validates them if it is validated,creates those values in DB
      * and returns success response.
@@ -68,6 +92,33 @@ class UserController extends Controller
         }
     }
 
+
+    /**
+     * @OA\Post(
+     *   path="/api/login",
+     *   summary="login",
+     *   description=" login ",
+     *   @OA\RequestBody(
+     *         @OA\JsonContent(),
+     *         @OA\MediaType(
+     *            mediaType="multipart/form-data",
+     *            @OA\Schema(
+     *               type="object",
+     *               required={"email", "password"},
+     *               @OA\Property(property="email", type="string"),
+     *               @OA\Property(property="password", type="password"),
+     *            ),
+     *        ),
+     *    ),
+     * @OA\Response(response=200, description="Login successfull"),
+     * @OA\Response(response=401, description="email not found register first"),
+     * 
+     * )
+     * Takes the POST request and user credentials checks if it correct,
+     * if so, returns JWT access token.
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
         try {
@@ -87,7 +138,7 @@ class UserController extends Controller
             $user = $userObject->userEmailValidation($request->email);
             if (!$user) {
                 Log::error('user faild to login', ['id' => $request->email]);
-                throw new BookStoreException("We can not find user with this email register first", 401);
+                throw new BookStoreException("email not found register first", 401);
             }
 
             if (!$token = auth()->attempt($validator->validated())) {
@@ -106,7 +157,32 @@ class UserController extends Controller
         }
     }
 
-    public function logout() {
+    /**
+     * Takes the POST request and JWT access token to logout the user profile
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    /**
+     * @OA\Post(
+     *   path="/api/logout",
+     *   summary="logout",
+     *   description=" logout ",
+     *  @OA\RequestBody(
+     *         @OA\JsonContent(),
+     *         @OA\MediaType(
+     *            mediaType="multipart/form-data",
+     *            @OA\Schema(
+     *               type="object",
+     *               required={"token",},
+     *               @OA\Property(property="token", type="string"),
+     *            ),
+     *        ),
+     *    ),
+     *   @OA\Response(response=200, description="User successfully signed out"),
+     * )
+     */
+    public function logout()
+    {
         auth()->logout();
 
         return response()->json([
