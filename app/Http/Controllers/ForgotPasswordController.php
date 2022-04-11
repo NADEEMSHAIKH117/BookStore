@@ -56,6 +56,7 @@ class ForgotPasswordController extends Controller
         try {
             $userObject = new User();
             $user = $userObject->userEmailValidation($request->email);
+
             if (!$user) {
                 Log::error('Email not found.', ['id' => $request->email]);
                 throw new BookStoreException("can not find a user with this email address", 400);

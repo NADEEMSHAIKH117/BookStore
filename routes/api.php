@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -20,11 +21,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['middleware' => 'api'], function() {
-    Route::post('register',[UserController::class, 'register']);
-    Route::post('login',[UserController::class, 'login']);
-    Route::post('logout',[UserController::class, 'logout']);
+Route::group(['middleware' => 'api'], function () {
+    Route::post('register', [UserController::class, 'register']);
+    Route::post('login', [UserController::class, 'login']);
+    Route::post('logout', [UserController::class, 'logout']);
 
-    Route::post('forgotpassword',[ForgotPasswordController::class, 'forgotPassword']);
-    Route::post('resetPassword',[ForgotPasswordController::class, 'resetPassword']);
- });
+    Route::post('forgotpassword', [ForgotPasswordController::class, 'forgotPassword']);
+    Route::post('resetPassword', [ForgotPasswordController::class, 'resetPassword']);
+
+    Route::post('addBook', [BookController::class, 'addBook']);
+    Route::post('updateBookByBookId', [BookController::class, 'updateBookByBookId']);
+    Route::post('addQuantityToExistingBook', [BookController::class, 'addQuantityToExistingBook']);
+    Route::post('deleteBookByBookId', [BookController::class, 'deleteBookByBookId']);
+    Route::get('getAllBooks', [BookController::class, 'getAllBooks']);
+});
