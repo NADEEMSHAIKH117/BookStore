@@ -229,6 +229,104 @@
                 }
             }
         },
+        "/api/addtocart": {
+            "post": {
+                "summary": "Add Book to cart",
+                "description": "User Can Add Book to cart ",
+                "operationId": "163adcc5a0eb5ada20a9b7e57888a99d",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "book_id"
+                                ],
+                                "properties": {
+                                    "book_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Book added to Cart Sucessfully"
+                    },
+                    "404": {
+                        "description": "Invalid authorization token"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/deleteBookByCartId": {
+            "post": {
+                "summary": "Delete the book from cart",
+                "description": " Delete cart ",
+                "operationId": "ddf2bd9696caf3ef09cffc5794f1a78d",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Book deleted Sucessfully from cart"
+                    },
+                    "404": {
+                        "description": "Invalid authorization token"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/getAllBooksByUserId": {
+            "get": {
+                "summary": "Get All Books Present in Cart",
+                "description": " Get All Books Present in Cart ",
+                "operationId": "d25cc9ca2acf117c491545cbb31a5ce8",
+                "requestBody": {},
+                "responses": {
+                    "404": {
+                        "description": "Invalid authorization token"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
         "/api/forgotpassword": {
             "post": {
                 "summary": "forgot password",

@@ -77,8 +77,18 @@ class User extends Authenticatable implements JWTSubject
         return $user;
     }
 
+    public function userVerification($currentUserId){
+        $userId = User::select('id')->where([['role', '=', 'user'], ['id', '=', $currentUserId]])->get();
+        return $userId;
+    }
+
     public function books()
     {
         return $this->hasMany('App\Models\Book');
+    }
+
+    public function carts()
+    {
+        return $this->hasMany('App\Models\cart');
     }
 }

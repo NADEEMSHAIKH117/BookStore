@@ -353,6 +353,7 @@ class BookController extends Controller
         try {
 
             $book = Book::paginate(3);
+            // $book = Book::get();
 
             if ($book == []) {
                 throw new BookStoreException("Books are not there", 404);
