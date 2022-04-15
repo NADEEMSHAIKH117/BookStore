@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,8 +38,27 @@ Route::group(['middleware' => 'api'], function () {
     Route::post('addQuantityToExistingBook', [BookController::class, 'addQuantityToExistingBook']);
     Route::post('deleteBookByBookId', [BookController::class, 'deleteBookByBookId']);
     Route::get('getAllBooks', [BookController::class, 'getAllBooks']);
+    Route::post('searchByEnteredKeyWord', [BookController::class, 'searchByEnteredKeyWord']);
+    Route::get('sortOnPriceLowToHigh', [BookController::class, 'sortOnPriceLowToHigh']);
+    Route::get('sortOnPriceHighToLow', [BookController::class, 'sortOnPriceHighToLow']);
 
     Route::post('addtocart', [CartController::class, 'addBookToCartByBookId']);
     Route::post('deleteBookByCartId', [CartController::class, 'deleteBookByCartId']);
     Route::get('getAllBooksByUserId', [CartController::class, 'getAllBooksByUserId']);
+    Route::post('increamentBookQuantityInCart', [CartController::class, 'increamentBookQuantityInCart']);
+    Route::post('decreamentBookQuantityInCart', [CartController::class, 'decreamentBookQuantityInCart']);
+    Route::post('addBookToCartBywishlist', [CartController::class, 'addBookToCartBywishlist']);
+
+
+    Route::post('addBookToWishlistBybookId', [WishlistController::class, 'addBookToWishlistBybookId']);
+    Route::post('deleteBookByWishlistId', [WishlistController::class, 'deleteBookByWishlistId']);
+    Route::get('getAllBooksInWishlist', [WishlistController::class, 'getAllBooksInWishlist']);
+
+    Route::post('addAddress',[AddressController::class, 'addAddress']);
+    Route::post('updateAddress',[AddressController::class, 'updateAddress']);
+    Route::post('deleteAddress',[AddressController::class, 'deleteAddress']);
+    Route::get('getAddress',[AddressController::class, 'getAddress']);
+
+    Route::post('placeOrder',[OrderController::class, 'placeOrder']);
+
 });
