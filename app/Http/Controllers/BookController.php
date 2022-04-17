@@ -18,7 +18,7 @@ class BookController extends Controller
 
     /**
      * @OA\Post(
-     *   path="/api/addbook",
+     *   path="/api/addBook",
      *   summary="Add Book",
      *   description="Admin Can Add Book ",
      *   @OA\RequestBody(
@@ -384,7 +384,7 @@ class BookController extends Controller
      *            ),
      *        ),
      *    ),
-     *   @OA\Response(response=201, description="Serch done Successfully"),
+     *   @OA\Response(response=201, description="Serching done Successfully"),
      *   @OA\Response(response=403, description="Invalid authorization token"),
      *   security = {
      * {
@@ -418,7 +418,7 @@ class BookController extends Controller
                 }
                 Log::info('Search is Successfull');
                 return response()->json([
-                    'message' => 'Serch done Successfully',
+                    'message' => 'Serchind done Successfully',
                     'books' => $userbooks
                 ], 201);
             }
@@ -436,7 +436,7 @@ class BookController extends Controller
      *   @OA\RequestBody(
      *
      *    ),
-     *   @OA\Response(response=201, description="These much books are in store ....."),
+     *   @OA\Response(response=201, description="Books prise Low To High ....."),
      *   security = {
      * {
      * "Bearer" : {}}}
@@ -468,7 +468,7 @@ class BookController extends Controller
      *   @OA\RequestBody(
      *
      *    ),
-     *   @OA\Response(response=201, description="These much books are in store ....."),
+     *   @OA\Response(response=201, description="Books prise High To Low ....."),
      *   security = {
      * {
      * "Bearer" : {}}}

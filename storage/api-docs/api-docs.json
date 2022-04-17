@@ -191,11 +191,11 @@
                 ]
             }
         },
-        "/api/addbook": {
+        "/api/addBook": {
             "post": {
                 "summary": "Add Book",
                 "description": "Admin Can Add Book ",
-                "operationId": "eda1db9386a16a065c77e2292acdfb26",
+                "operationId": "9d5d155e9f4f34f95b4d3809f6ca5293",
                 "requestBody": {
                     "content": {
                         "multipart/form-data": {
@@ -438,7 +438,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Serch done Successfully"
+                        "description": "Serching done Successfully"
                     },
                     "403": {
                         "description": "Invalid authorization token"
@@ -459,7 +459,7 @@
                 "requestBody": {},
                 "responses": {
                     "201": {
-                        "description": "These much books are in store ....."
+                        "description": "Books prise Low To High ....."
                     }
                 },
                 "security": [
@@ -477,7 +477,7 @@
                 "requestBody": {},
                 "responses": {
                     "201": {
-                        "description": "These much books are in store ....."
+                        "description": "Books prise High To Low ....."
                     }
                 },
                 "security": [

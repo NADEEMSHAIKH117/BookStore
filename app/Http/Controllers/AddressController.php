@@ -59,13 +59,7 @@ class AddressController extends Controller
             $currentUser = JWTAuth::parseToken()->authenticate();
             if($currentUser) {
                 $address = new Address();
-                // $address_exist = $address->addressExist($currentUser->id);
-                // return $address_exist;
-
-                // if($address_exist){
-                //     Log::error('Address already exits');
-                //     throw new BookStoreException("Address already exits for the user", 401);
-                // }
+              
                 $address->user_id = $currentUser->id;
                 $address->address = $request->input('address');
                 $address->city = $request->input('city');

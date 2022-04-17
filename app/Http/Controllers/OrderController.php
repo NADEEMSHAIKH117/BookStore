@@ -88,16 +88,16 @@ class OrderController extends Controller
             $userId = User::where('id', $currentUser->id)->first();
 
             $delay = now()->addSeconds(5);
-                $userId->notify((new sendOrderDetails($order->order_id, $bookDetails['name'], $bookDetails['author'], $request->input('quantity'), $total_price))->delay($delay));
+                $userId->notify((new sendOrderDetails($order->id, $bookDetails['name'], $bookDetails['author'], $request->input('quantity'), $total_price))->delay($delay));
 
                 $bookDetails['quantity'] -= $request->quantity;
                 $bookDetails->save();  
                 return response()->json([
                     'message' => 'Order Successfully Placed...',
-                    'OrderId' => $order->order_id,
+                    'OrderId' => $order->id,
                     'Quantity' => $request->input('quantity'),
                     'Total_Price' => $total_price,
-                    'message1' => 'Mail also sent to the user with all details',
+                    'message' => 'Mail sent to the user with all details',
                 ], 201);
                 Cache::remember('orders', 3600, function () {
                     return DB::table('orders')->get();

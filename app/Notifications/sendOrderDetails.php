@@ -60,7 +60,7 @@ class sendOrderDetails extends Notification implements ShouldQueue
         ->line('Book Quantity : '. $this->quantity)
         ->line('Total Payment : '. $this->totalPrice)
         ->line('Save the OrderId For Further Communication')
-        ->line('For Further Querry Contact This Email Id')
+        ->line('For Further Querry Contact This Email Id: '.env('MAIL_USERNAME'))
         ->line('Thank you for using our application!');
     }
 
