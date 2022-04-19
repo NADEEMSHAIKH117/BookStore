@@ -78,13 +78,13 @@ class OrderController extends Controller
 
                 //calculate total price
                 $total_price = $request->input('quantity') * $bookDetails['Price'];
+
                 $order = Order::create([
                     'user_id' => $currentUser->id,
                     'book_id' => $bookDetails['id'],
                     'address_id' => $getAddress['id'],
                     'order_id' => $this->unique_code(9),
                 ]);
-                $order->order($currentUser, $bookDetails, $getAddress);
                 $userId = User::where('id', $currentUser->id)->first();
 
                 $delay = now()->addSeconds(5);
