@@ -108,4 +108,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany('App\Models\Address');
     }
+    public function feedback()
+    {
+        return $this->hasMany('App\Models\Feedback');
+    }
 }

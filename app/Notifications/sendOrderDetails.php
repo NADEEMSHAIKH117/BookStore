@@ -12,6 +12,7 @@ class sendOrderDetails extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    
     public $order_id;
     public $bookName;
     public $bookAuthor;

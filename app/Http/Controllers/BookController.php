@@ -373,6 +373,10 @@ class BookController extends Controller
      * "Bearer" : {}}}
      * )
      */
+    /**
+     * This function is use for search Books and its details
+     * with the help of key words
+     */
     public function searchByEnteredKeyWord(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -419,6 +423,9 @@ class BookController extends Controller
      * "Bearer" : {}}}
      * )
      */
+    /**
+     * This function is use to sort the price of Book to Low to High
+     */
     public function sortOnPriceLowToHigh()
     {
         $currentUser = JWTAuth::parseToken()->authenticate();
@@ -449,6 +456,9 @@ class BookController extends Controller
      * {
      * "Bearer" : {}}}
      * )
+     */
+    /**
+     * This function is use to sort the price of Book to High to Low
      */
     public function sortOnPriceHighToLow()
     {

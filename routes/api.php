@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
@@ -60,5 +61,7 @@ Route::group(['middleware' => 'api'], function () {
     Route::get('getAddress',[AddressController::class, 'getAddress']);
 
     Route::post('placeOrder',[OrderController::class, 'placeOrder']);
+
+    Route::post('feedback',[FeedbackController::class, 'feedback']);
 
 });

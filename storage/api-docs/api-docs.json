@@ -9,66 +9,6 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/addAddress": {
-            "post": {
-                "summary": "Add Address",
-                "description": "User Can Add Address ",
-                "operationId": "abd1c37c08074a7a38aead269f18a510",
-                "requestBody": {
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "required": [
-                                    "address",
-                                    "city",
-                                    "state",
-                                    "landmark",
-                                    "pincode",
-                                    "address_type"
-                                ],
-                                "properties": {
-                                    "address": {
-                                        "type": "string"
-                                    },
-                                    "city": {
-                                        "type": "string"
-                                    },
-                                    "state": {
-                                        "type": "string"
-                                    },
-                                    "landmark": {
-                                        "type": "string"
-                                    },
-                                    "pincode": {
-                                        "type": "integer"
-                                    },
-                                    "address_type": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        },
-                        "application/json": {
-                            "schema": {}
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Address Added Successfully"
-                    },
-                    "401": {
-                        "description": "Address alredy present for the user"
-                    }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
-            }
-        },
         "/api/updateAddress": {
             "post": {
                 "summary": "Update Address",
@@ -411,82 +351,6 @@
                 }
             }
         },
-        "/api/searchByEnteredKeyWord": {
-            "post": {
-                "summary": "search the book from BookStoreApp",
-                "description": " Search Book ",
-                "operationId": "ae3afae99d95211fccb8bc83e4aaa9d8",
-                "requestBody": {
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "required": [
-                                    "search"
-                                ],
-                                "properties": {
-                                    "search": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        },
-                        "application/json": {
-                            "schema": {}
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Serching done Successfully"
-                    },
-                    "403": {
-                        "description": "Invalid authorization token"
-                    }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
-            }
-        },
-        "/api/sortOnPriceLowToHigh": {
-            "get": {
-                "summary": "sorting Low to High",
-                "description": " sort on ascending order ",
-                "operationId": "6231ab127307e4c7685be38d64d55fae",
-                "requestBody": {},
-                "responses": {
-                    "201": {
-                        "description": "Books prise Low To High ....."
-                    }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
-            }
-        },
-        "/api/sortOnPriceHighToLow": {
-            "get": {
-                "summary": "sorting High to Low",
-                "description": " sort on Descending order ",
-                "operationId": "378e2dd221c1eed974f061b18d5bc92b",
-                "requestBody": {},
-                "responses": {
-                    "201": {
-                        "description": "Books prise High To Low ....."
-                    }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
-            }
-        },
         "/api/addtocart": {
             "post": {
                 "summary": "Add Book to cart",
@@ -696,6 +560,49 @@
                     },
                     "404": {
                         "description": "Invalid authorization token"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/feedback": {
+            "post": {
+                "summary": "Feedback of User",
+                "description": " Feedback ",
+                "operationId": "b02fa70a46a26374bd47556fe186b168",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "User_feedback"
+                                ],
+                                "properties": {
+                                    "User_feedback": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Thank you for your Feedback Your feedback is very important to us...."
+                    },
+                    "404": {
+                        "description": "Your are not an User"
+                    },
+                    "401": {
+                        "description": "Invalid Authorization token"
                     }
                 },
                 "security": [
