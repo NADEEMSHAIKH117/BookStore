@@ -40,6 +40,9 @@ class AddressController extends Controller
      * "Bearer" : {}}}
      * )
      * */
+    /**
+     * This AddAddress function is use to add Address of the User
+     */
     public function addAddress(Request $request)
     {
         $validator = Validator::make($request->all(), [
