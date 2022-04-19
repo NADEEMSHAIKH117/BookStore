@@ -78,7 +78,6 @@ class OrderController extends Controller
 
                 //calculate total price
                 $total_price = $request->input('quantity') * $bookDetails['Price'];
-                $order = new Order();
                 $order = Order::create([
                     'user_id' => $currentUser->id,
                     'book_id' => $bookDetails['id'],
