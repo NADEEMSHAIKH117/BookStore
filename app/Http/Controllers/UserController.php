@@ -56,15 +56,6 @@ class UserController extends Controller
                 'password' => 'required|string|min:6',
                 'confirm_password' => 'required|same:password',
             ]);
-            $userArray = array(
-                'role' => $request->role,
-                'firstname' => $request->firstname,
-                'lastname' => $request->lastname,
-                'phone_no' => $request->phone_no,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            );
-
             if ($validator->fails()) {
                 return response()->json($validator->errors()->toJson(), 400);
             }
@@ -76,7 +67,7 @@ class UserController extends Controller
                 throw new BookStoreException("The email has already been taken", 401);
             }
 
-            $userObject->saveUserDetails($userArray);
+            $userObject->saveUserDetails($request);
             Log::info('Registered user Email : ' . 'Email Id :' . $request->email);
             Cache::remember('users', 3600, function () {
                 return DB::table('users')->get();

@@ -53,7 +53,7 @@ class sendOrderDetails extends Notification implements ShouldQueue
     {
         return (new MailMessage)
         ->line('your order is confirmed.')
-        ->line('Your Order Summary is : ')
+        ->line('Your Order Details : ')
         ->line('Order_Id : '.$this->order_id)
         ->line('Book Name : '. $this->bookName)
         ->line('Book Author : '. $this->bookAuthor)

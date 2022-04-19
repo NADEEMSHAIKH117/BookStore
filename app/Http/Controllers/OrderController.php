@@ -19,7 +19,7 @@ class OrderController extends Controller
 {
 
 
-     /**
+    /**
      * @OA\Post(
      *   path="/api/placeOrder",
      *   summary="Place  Order",
@@ -56,45 +56,46 @@ class OrderController extends Controller
         }
         try {
             $currentUser = JWTAuth::parseToken()->authenticate();
-            if($currentUser){
+            if ($currentUser) {
                 $book = new Book();
                 $address = new Address();
                 $bookDetails = $book->getBookDetails($request->input('name'));
                 if ($bookDetails == '') {
                     Log::error('Book is not available');
-                    throw new BookStoreException("We Do not have this book in the store...", 401); 
-            }
+                    throw new BookStoreException("We Do not have this book in the store...", 401);
+                }
 
-            if ($bookDetails['quantity'] < $request->input('quantity')) {
-                Log::error('Book stock is not available');
-                throw new BookStoreException("This much stock is unavailable for the book", 401);
-            }
+                if ($bookDetails['quantity'] < $request->input('quantity')) {
+                    Log::error('Book stock is not available');
+                    throw new BookStoreException("This much stock is unavailable for the book", 401);
+                }
 
-            //getting addressID
-            $getAddress = $address->addressExist($request->input('address_id'));
-            if (!$getAddress) {
-                throw new BookStoreException("This address id not available", 401);
-            }
+                //getting addressID
+                $getAddress = $address->addressExist($request->input('address_id'));
+                if (!$getAddress) {
+                    throw new BookStoreException("This address id not available", 401);
+                }
 
-            //calculate total price
-            $total_price = $request->input('quantity') * $bookDetails['Price'];
+                //calculate total price
+                $total_price = $request->input('quantity') * $bookDetails['Price'];
+                $order = new Order();
+                $order = Order::create([
+                    'user_id' => $currentUser->id,
+                    'book_id' => $bookDetails['id'],
+                    'address_id' => $getAddress['id'],
+                    'order_id' => $this->unique_code(9),
+                ]);
+                $order->order($currentUser, $bookDetails, $getAddress);
+                $userId = User::where('id', $currentUser->id)->first();
 
-            $order = Order::create([
-                'user_id' => $currentUser->id,
-                'book_id' => $bookDetails['id'],
-                'address_id' => $getAddress['id'],
-            ]);
-
-            $userId = User::where('id', $currentUser->id)->first();
-
-            $delay = now()->addSeconds(5);
-                $userId->notify((new sendOrderDetails($order->id, $bookDetails['name'], $bookDetails['author'], $request->input('quantity'), $total_price))->delay($delay));
+                $delay = now()->addSeconds(5);
+                $userId->notify((new sendOrderDetails($order->order_id, $bookDetails['name'], $bookDetails['author'], $request->input('quantity'), $total_price))->delay($delay));
 
                 $bookDetails['quantity'] -= $request->quantity;
-                $bookDetails->save();  
+                $bookDetails->save();
                 return response()->json([
                     'message' => 'Order Successfully Placed...',
-                    'OrderId' => $order->id,
+                    'OrderId' => $order->order_id,
                     'Quantity' => $request->input('quantity'),
                     'Total_Price' => $total_price,
                     'message' => 'Mail sent to the user with all details',
@@ -102,10 +103,19 @@ class OrderController extends Controller
                 Cache::remember('orders', 3600, function () {
                     return DB::table('orders')->get();
                 });
-
-        }
+            }
         } catch (BookStoreException $exception) {
             return $exception->message();
         }
     }
+    /**
+     * base_convert – Convert a number between arbitrary bases
+     * sha1 – Calculate the sha1 hash of a string.
+     * uniqid – Generate a unique ID.
+     * mt_rand – Generate a random value via the Mersenne Twister Random Number Generator.
+     */
+    function unique_code($limit)
+        {
+            return substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $limit);
+        }
 }

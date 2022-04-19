@@ -71,7 +71,6 @@ class CartController extends Controller
                         'message' => 'Book not Found'
                     ], 404);
                 }
-
                 $books = $book->findBook($book_id);
                 if ($books->quantity == 0) {
                     return response()->json([
@@ -80,15 +79,12 @@ class CartController extends Controller
                     ], 404);
                 }
                 $book_cart = $cart->bookCart($book_id, $currentUser->id);
-                // return $book_cart;
-
                 if ($book_cart) {
                     return response()->json([
                         'status' => 404,
                         'message' => 'Book already added in cart'
                     ], 404);
                 }
-
                 $cart->book_id = $request->get('book_id');
 
                 if ($currentUser->carts()->save($cart)) {
@@ -99,7 +95,6 @@ class CartController extends Controller
                         'message' => 'Book added to Cart Sucessfully'
                     ], 201);
                 }
-
                 return response()->json(['message' => 'Book cannot be added to Cart'], 405);
             } else {
                 Log::error('Invalid User');
@@ -138,11 +133,9 @@ class CartController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required',
         ]);
-
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-
         try {
             $id = $request->input('id');
             $currentUser = JWTAuth::parseToken()->authenticate();
@@ -199,20 +192,17 @@ class CartController extends Controller
                 return response()->json(['message' => 'Your are not an User'], 404);
             }
             if ($currentUser) {
-                $books = Cart::leftJoin('books', 'carts.book_id', '=', 'books.id')
-                    ->select('books.id', 'books.name', 'books.author', 'books.description', 'books.price', 'carts.book_quantity')
-                    ->where('carts.user_id', '=', $currentUser->id)->get();
+                $books = new Cart();
+                Log::info('All book Presnet in cart are fetched');
+                return response()->json([
+                    'message' => 'Books Present in Cart :',
+                    'Cart' => $books->getBooks($currentUser)
 
+                ], 201);
                 if ($books == '[]') {
                     Log::error('Book Not Found');
                     return response()->json(['message' => 'Books not found'], 404);
                 }
-                Log::info('All book Presnet in cart are fetched');
-                return response()->json([
-                    'message' => 'Books Present in Cart :',
-                    'Cart' => $books,
-
-                ], 201);
             } else {
                 Log::error('Invalid User');
                 throw new BookStoreException("Invalid authorization token", 404);

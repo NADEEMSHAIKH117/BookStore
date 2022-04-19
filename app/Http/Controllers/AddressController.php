@@ -49,25 +49,15 @@ class AddressController extends Controller
             'landmark' => 'required|string|between:2,100',
             'pincode' => 'required|integer',
             'address_type' => 'required|string|between:2,100',
-        ]); 
-        
+        ]);
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
-
         try {
             $currentUser = JWTAuth::parseToken()->authenticate();
-            if($currentUser) {
+            if ($currentUser) {
                 $address = new Address();
-              
-                $address->user_id = $currentUser->id;
-                $address->address = $request->input('address');
-                $address->city = $request->input('city');
-                $address->state = $request->input('state');
-                $address->landmark = $request->input('landmark');
-                $address->pincode = $request->input('pincode');
-                $address->address_type = $request->input('address_type');
-                $address->save();
+                $address->addressDetails($request, $currentUser)->save();
                 Log::info('Address Added To Respective User', ['user_id', '=', $currentUser->id]);
                 return response()->json([
                     'message' => 'Address Added Successfully'
@@ -126,17 +116,17 @@ class AddressController extends Controller
 
         try {
             $currentUser = JWTAuth::parseToken()->authenticate();
-            if($currentUser){
+            if ($currentUser) {
                 $address = new Address();
                 $address_exist = $address->addressExist($request->id);
 
-                if(!$address_exist){
+                if (!$address_exist) {
                     Log::error('Address is empty');
                     throw new BookStoreException("Address not present add address first", 401);
                 }
 
                 $address_exist->fill($request->all());
-                if($address_exist->save()) {
+                if ($address_exist->save()) {
                     Log::info('Address Updated For Respective User', ['user_id', '=', $currentUser->id]);
                     return response()->json([
                         'message' => ' Address Updated Successfully'
@@ -146,7 +136,6 @@ class AddressController extends Controller
         } catch (BookStoreException $exception) {
             return $exception->message();
         }
-        
     }
 
 
@@ -189,7 +178,7 @@ class AddressController extends Controller
 
             if (!$address_exist) {
                 throw new BookStoreException('User not Found', 404);
-            } 
+            }
 
             if ($address_exist->delete()) {
                 Log::info('Address Deleted For Respective User', ['user_id', '=', $currentUser->id]);
@@ -219,7 +208,7 @@ class AddressController extends Controller
     {
         $currentUser = JWTAuth::parseToken()->authenticate();
         try {
-            if ($currentUser){
+            if ($currentUser) {
                 $address = new Address();
                 $user = $address->userAddress($currentUser->id);
 
@@ -231,11 +220,9 @@ class AddressController extends Controller
                     'address' => $user,
                     'message' => 'Fetched Address Successfully'
                 ], 201);
-
             }
         } catch (BookStoreException $exception) {
             return $exception->message();
         }
-
     }
 }
