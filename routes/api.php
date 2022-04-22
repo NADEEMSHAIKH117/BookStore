@@ -63,5 +63,7 @@ Route::group(['middleware' => 'api'], function () {
     Route::post('placeOrder',[OrderController::class, 'placeOrder']);
 
     Route::post('feedback',[FeedbackController::class, 'feedback']);
+    Route::post('bookRating',[FeedbackController::class, 'bookRating']);
+    Route::post('displayAvgRatingOfBook',[FeedbackController::class, 'displayAvgRatingOfBook']);
 
 });

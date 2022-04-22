@@ -569,49 +569,6 @@
                 ]
             }
         },
-        "/api/feedback": {
-            "post": {
-                "summary": "Feedback of User",
-                "description": " Feedback ",
-                "operationId": "b02fa70a46a26374bd47556fe186b168",
-                "requestBody": {
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "required": [
-                                    "User_feedback"
-                                ],
-                                "properties": {
-                                    "User_feedback": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        },
-                        "application/json": {
-                            "schema": {}
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Thank you for your Feedback Your feedback is very important to us...."
-                    },
-                    "404": {
-                        "description": "Your are not an User"
-                    },
-                    "401": {
-                        "description": "Invalid Authorization token"
-                    }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
-            }
-        },
         "/api/forgotpassword": {
             "post": {
                 "summary": "forgot password",

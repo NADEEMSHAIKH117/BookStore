@@ -376,6 +376,7 @@ class BookController extends Controller
     /**
      * This function is use for search Books and its details
      * with the help of key words
+     * It valid Authenticate token as an input 
      */
     public function searchByEnteredKeyWord(Request $request)
     {
